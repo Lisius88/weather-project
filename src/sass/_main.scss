@@ -54,11 +54,13 @@ img {
 .item {
   padding: 25px;
   transition: transform var(--animation-duration) var(--timing-function);
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
+  box-shadow: 5px 5px 3px 0px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
   font-size: 8px;
   cursor: pointer;
   text-align: center;
+  background-color: #cae2f8;
+  border-radius: 10px;
 }
 
 .item:hover {
@@ -66,12 +68,18 @@ img {
 }
 
 .city {
+  margin-top: 30px;
+  margin-bottom: 30px;
   text-align: center;
   text-transform: uppercase;
   margin-left: auto;
   margin-right: auto;
 
   color: #fafafa;
+
+  @include tablet {
+    margin-top: 0;
+  }
 }
 
 .background {
@@ -158,10 +166,11 @@ img {
   max-width: 290px;
   cursor: pointer;
   color: #fff;
-
+  border-radius: 8px;
   transition: transform var(--animation-duration) var(--timing-function);
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 6px 6px 3px 0px rgba(12, 12, 49, 0.14),
+    0px 1px 1px 0px rgba(12, 12, 49, 0.14),
+    0px 2px 1px -1px rgba(12, 12, 49, 0.14);
   padding: 10px;
 
   @include tablet {
@@ -175,8 +184,12 @@ img {
   align-items: center;
 }
 .main-temp {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  @include mobile {
+    font-size: 20px;
+  }
+
   @include tablet {
     font-size: 27px;
   }
@@ -209,6 +222,9 @@ img {
 .icon {
   margin-left: auto;
   margin-right: auto;
+  background-color: #e6f3fd;
+  border-radius: 30%;
+  margin-top: 10px;
 }
 
 .date {
@@ -222,5 +238,10 @@ img {
 
 .temp-night {
   color: #002a61;
+  font-weight: 600;
+}
+
+.time {
+  font-size: 20px;
   font-weight: 600;
 }

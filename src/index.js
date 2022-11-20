@@ -7,8 +7,6 @@ const city = document.querySelector('.city');
 const form = document.querySelector('form');
 const input = document.querySelector('input');
 const mainDay = document.querySelector('.main-day');
-// 4202b3fa59ea4adf832162138221110
-// http://api.weatherapi.com/v1/forecast.json?key=4202b3fa59ea4adf832162138221110&q=Lviv&days=7
 
 form.addEventListener('submit', onClick);
 
@@ -77,26 +75,25 @@ function createMark(arr) {
 function createMarkCurrent(data) {
   const mark = `
   <div class="flex-for-main">
-  <h3 class="time">${data.location.localtime.slice(
+  <p class="time">${data.location.localtime.slice(
     10,
     data.location.localtime.length
-  )}</h3>
-  <p>${data.current.condition.text}</p>
+  )} ${data.current.condition.text}</p>
   </div>
   <div class="flex-for-main">
-  <h3 class="main-temp main-temp-margin">${data.current.temp_c}</h3>
+  <h3 class="main-temp main-temp-margin">${Math.round(data.current.temp_c)}</h3>
   <span class="span">&#8451</span>
   <span class="ochko">(</span>
-  <h3 class="main-temp">feels like ${data.current.feelslike_c} </h3>
+  <h3 class="main-temp">feels like ${Math.round(data.current.feelslike_c)} </h3>
   <span class="span">&#8451</span>
   <span class="ochko">)</span>
   <img src="${data.current.condition.icon}" alt="${
     data.current.condition.text
   }" width ="60px" height="60px">
   </div>
-  <p>Humidity: ${data.current.humidity}%. Pressure: ${
-    data.current.pressure_mb
-  } mmHg. Wind: ${data.current.wind_kph} km/h.</p>
+  <p>Humidity: ${data.current.humidity}%. Wind: ${
+    data.current.wind_kph
+  } km/h. Pressure: ${data.current.pressure_mb} mmHg.</p>
   `;
   mainDay.innerHTML = '';
   mainDay.insertAdjacentHTML('beforeend', mark);
