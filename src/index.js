@@ -1,3 +1,6 @@
+import Notiflix, { Notify } from 'notiflix';
+import 'animate.css';
+
 const body = document.querySelector('body');
 const container = document.querySelector('ul');
 const city = document.querySelector('.city');
@@ -26,24 +29,46 @@ function onClick(e) {
     })
     .then(data => {
       console.log(data);
+      mainDay.classList.remove('is-hidden');
+      mainDay.classList.add('animate__animated');
+      mainDay.classList.add('animate__backInLeft');
+
       const markup = createMark(data.forecast.forecastday);
       container.innerHTML = markup;
       city.textContent = `Weather in ${data.location.name}, ${data.location.country}`;
-      console.log(data.location.localtime);
       createMarkCurrent(data);
+      setTimeout(classRemove, 1500);
+      input.value = '';
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error);
+      if (input.value === '') {
+        Notify.failure('Please, enter a city');
+      } else Notify.failure('Try to enter another city');
+    });
+}
+
+function classRemove() {
+  mainDay.classList.remove('animate__animated');
+  mainDay.classList.remove('animate__backInLeft');
 }
 
 function createMark(arr) {
   return arr
     .map(
       per => `<li class="item">
-  <h1>Date: ${per.date}</h1>
-  <h2>Average Temp: ${per.day.avgtemp_c}</h2>
-  <h2>Min Temp: ${per.day.mintemp_c}</h2>
-  <h2>Max Temp: ${per.day.maxtemp_c}</h2>
-  <img src="${per.day.condition.icon}" alt="${per.day.condition.text}">
+  <h3 class="date">${per.date}</h3>
+  <p class="next-day-descr">Night: <span class="temp-night">${Math.round(
+    per.day.mintemp_c
+  )} 	
+</span>&#8451</p>
+  <p class="next-day-descr">Day: <span class="temp-day">${Math.round(
+    per.day.maxtemp_c
+  )} 	
+</span>&#8451</p>
+  <img class="icon" src="${per.day.condition.icon}" alt="${
+        per.day.condition.text
+      }">
   </li>`
     )
     .join('');
@@ -59,9 +84,12 @@ function createMarkCurrent(data) {
   <p>${data.current.condition.text}</p>
   </div>
   <div class="flex-for-main">
-  <h3 class="main-temp">${data.current.temp_c} (feels like ${
-    data.current.feelslike_c
-  })</h3>
+  <h3 class="main-temp main-temp-margin">${data.current.temp_c}</h3>
+  <span class="span">&#8451</span>
+  <span class="ochko">(</span>
+  <h3 class="main-temp">feels like ${data.current.feelslike_c} </h3>
+  <span class="span">&#8451</span>
+  <span class="ochko">)</span>
   <img src="${data.current.condition.icon}" alt="${
     data.current.condition.text
   }" width ="60px" height="60px">
