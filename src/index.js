@@ -27,44 +27,37 @@ function onClick(e) {
     })
     .then(data => {
       console.log(data);
-      mainDay.classList.remove('is-hidden');
-      mainDay.classList.add('animate__animated');
-      mainDay.classList.add('animate__backInLeft');
-
+      classAdd();
       const markup = createMark(data.forecast.forecastday);
       container.innerHTML = markup;
       city.textContent = `Weather in ${data.location.name}, ${data.location.country}`;
       createMarkCurrent(data);
       setTimeout(classRemove, 1500);
-      input.value = '';
+      form.reset();
     })
     .catch(error => {
       console.log(error);
       if (input.value === '') {
         Notify.failure('Please, enter a city');
       } else Notify.failure('Try to enter another city');
+      form.reset();
     });
-}
-
-function classRemove() {
-  mainDay.classList.remove('animate__animated');
-  mainDay.classList.remove('animate__backInLeft');
 }
 
 function createMark(arr) {
   return arr
     .map(
       per => `<li class="item">
-  <h3 class="date">${per.date}</h3>
-  <p class="next-day-descr">Night: <span class="temp-night">${Math.round(
+  <h3 class="next-day-date">${per.date}</h3>
+  <p class="next-day-descr">Night: <span class="next-day-temp-night">${Math.round(
     per.day.mintemp_c
   )} 	
 </span>&#8451</p>
-  <p class="next-day-descr">Day: <span class="temp-day">${Math.round(
+  <p class="next-day-descr">Day: <span class="next-day-temp-day">${Math.round(
     per.day.maxtemp_c
   )} 	
 </span>&#8451</p>
-  <img class="icon" src="${per.day.condition.icon}" alt="${
+  <img class="next-day-icon" src="${per.day.condition.icon}" alt="${
         per.day.condition.text
       }">
   </li>`
@@ -75,18 +68,18 @@ function createMark(arr) {
 function createMarkCurrent(data) {
   const mark = `
   <div class="flex-for-main">
-  <p class="time">${data.location.localtime.slice(
+  <p class="main-time">${data.location.localtime.slice(
     10,
     data.location.localtime.length
   )} ${data.current.condition.text}</p>
   </div>
   <div class="flex-for-main">
   <h3 class="main-temp main-temp-margin">${Math.round(data.current.temp_c)}</h3>
-  <span class="span">&#8451</span>
-  <span class="ochko">(</span>
+  <span class="main-degree">&#8451</span>
+  <span class="main-brackets">(</span>
   <h3 class="main-temp">feels like ${Math.round(data.current.feelslike_c)} </h3>
-  <span class="span">&#8451</span>
-  <span class="ochko">)</span>
+  <span class="main-degree">&#8451</span>
+  <span class="main-brackets">)</span>
   <img src="${data.current.condition.icon}" alt="${
     data.current.condition.text
   }" width ="60px" height="60px">
@@ -95,6 +88,15 @@ function createMarkCurrent(data) {
     data.current.wind_kph
   } km/h. Pressure: ${data.current.pressure_mb} mmHg.</p>
   `;
-  mainDay.innerHTML = '';
-  mainDay.insertAdjacentHTML('beforeend', mark);
+  mainDay.innerHTML = mark;
+}
+
+function classAdd() {
+  mainDay.classList.remove('is-hidden');
+  mainDay.classList.add('animate__animated');
+  mainDay.classList.add('animate__backInLeft');
+}
+function classRemove() {
+  mainDay.classList.remove('animate__animated');
+  mainDay.classList.remove('animate__backInLeft');
 }
