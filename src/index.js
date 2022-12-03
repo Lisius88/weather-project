@@ -16,7 +16,7 @@ function onClick(e) {
   const { selectCity } = e.currentTarget.elements;
 
   const serviceApi = fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=399b02968ca741e699a131342221911&q=${selectCity.value}&days=7`
+    `https://api.weatherapi.com/v1/forecast.json?key=4b4cdbac3c434f259a6143446220312&q=${selectCity.value}&days=7`
   );
   serviceApi
     .then(resp => {
